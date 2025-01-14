@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Run",
+            "type": "command",
+            "program": "C:\\Program Files (x86)\\Go\\bin\\go.exe",
+            "args": ["run", "cmd/main/main.go"]
+        }
+    ]
+}
