@@ -14,25 +14,23 @@ type Game struct {
 	state         State
 }
 
-func NewGame() Game {
+func NewGame(width int, height int) Game {
 	return Game{
 		currentPlayer: cell.X,
-		board:         board.NewBoard(20, 10),
+		board:         board.NewBoard(width, height),
 		msg:           NewEmptyMsg(),
 		state:         NewState(),
 	}
 }
 
-func (g Game) Restart() {
+func (g Game) Restart() Game {
 	width := g.board.Width
 	height := g.board.Height
-	g.currentPlayer = cell.X
-	g.board = board.NewBoard(width, height)
-	g.msg = NewEmptyMsg()
-	g.state = NewState()
+	return NewGame(width, height) // TODO deal with auto width and height
 }
 
 func (g Game) Init() tea.Cmd {
+	//g.board.Width = tea.WindowSize()
 	return nil
 }
 
@@ -54,7 +52,8 @@ func (g Game) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "c":
 			g.board.ToggleCentered()
 		case "r":
-			g.Restart()
+			//fmt.Println(color.Red + "Restart the game: Are you sure? y/n" + color.Reset)
+			return g.Restart(), nil
 		case " ", "enter":
 			if !g.state.Running {
 				return g, nil
